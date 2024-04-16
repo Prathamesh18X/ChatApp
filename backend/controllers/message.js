@@ -60,7 +60,7 @@ export const getMessage = async(req,res) => {
         in a document with document(s) from other collections. This is particularly
         useful when you have references to other documents in your schema.
         */
-
+        if (!conversation) return res.status(200).json([]);
 
         res.status(200).json(conversation.message)
     } catch (error) {

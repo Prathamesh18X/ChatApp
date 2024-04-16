@@ -1,21 +1,21 @@
-import React from 'react'
-import ConversationStripe from './ConversationStripe'
-
-const ConversationList = () => {
+import React from "react";
+import ConversationStripe from "./ConversationStripe";
+import useGetConversations from "../hooks/useGetConversation";
+const ConversationList = (c) => {
+  const { loading, conversations } = useGetConversations();
+//   console.log("conversation with : ", conversations);
   return (
- <div className='py-2 flex flex-col w-96 overflow-auto'>
-			<ConversationStripe />
-			<ConversationStripe />
-			<ConversationStripe />
-			<ConversationStripe />
-			<ConversationStripe />
-			<ConversationStripe />
-			<ConversationStripe />
-			<ConversationStripe />
-			<ConversationStripe />
-			<ConversationStripe />
-		</div>
-	);
-}
+    <div className="py-2 flex flex-col w-96 overflow-auto">
+      {conversations.map((conversation, idx) => (
+        <ConversationStripe
+          key={conversation._id}
+          conversation={conversation}
+		  lastIdx={idx === conversation.length - 1}
+        />
+      ))}
+	  {loading ? <span className='loading loading-spinner mx-auto'></span> : null}
+    </div>
+  );
+};
 
-export default ConversationList
+export default ConversationList;

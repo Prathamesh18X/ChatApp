@@ -1,17 +1,43 @@
-import React from 'react'
+import React from "react";
+import { useAuth } from "../Context/AuthContext";
+import useConversation from "../zustand/useConversation";
 
-const Message = () => {
+const convertToHourMinute = (timeString) => {
+  const date = new Date(timeString);
+  let hour = date.getHours();
+  const minute = date.getMinutes().toString().padStart(2, "0");
+  const period = hour >= 12 ? "PM" : "AM";
+  hour = hour % 12 || 12;
+  hour = hour.toString().padStart(2, "0");
+  return `${hour}:${minute} ${period}`;
+};
+const Message = ({ message }) => {
+  const { authUser } = useAuth();
+  const { selectedConversation } = useConversation();
+  const chatClassName =
+    message.senderId === authUser._id ? "chat chat-end" : "chat chat-start";
+  const messageTime = convertToHourMinute(message.createdAt);
+  const profilePic =
+    message.senderId === authUser._id
+      ? authUser.profilePic
+      : selectedConversation.profilePic;
+
+const chatBubbleClassName = message.senderId === authUser._id ? "bg-black-100" : "bg-gray-500";
   return (
-    <div className={`chat chat-end`}>
-			<div className='chat-image avatar'>
-				<div className='w-10 rounded-full'>
-					<img alt='Tailwind CSS chat bubble component' src='https://cdn0.iconfinder.com/data/icons/communication-line-10/24/account_profile_user_contact_person_avatar_placeholder-512.png' />
-				</div>
-			</div>
-			<div className={`chat-bubble text-white pb-2`}>Hi , How are you  ? ..</div>
-			<div className='chat-footer text-xs flex gap-1 items-center'>12:50 pm</div>
-		</div>
-  )
-}
+    <div className={`chat p-[2px] ${chatClassName}`}>
+      <div className="chat-image avatar">
+        <div className="w-10 rounded-full">
+          <img alt="Tailwind CSS chat bubble component" src={profilePic} />
+        </div>
+      </div>
+      <div className={`chat-bubble flex flex-col ${chatBubbleClassName} pb-1`}>
+        <span className="text-white text-sm pr-12">{message.message}</span>
+        <span className="chat-footer text-[10px] flex gap-1 justify-end">
+          {messageTime}
+        </span>
+      </div>
+    </div>
+  );
+};
 
-export default Message
+export default Message;
