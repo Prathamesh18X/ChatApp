@@ -6,8 +6,8 @@ const useSignup =()=>{
     //step 3 : crete useState for Loading state
     const [loading , setLoading] = useState(false);
     //step 1: Create a signup function , which takes input from signup form.
-    const signUp = async({fullName , userName , confirmPassword , password, gender}) => {
-        const success = handleInputErrors({fullName , userName , confirmPassword , password, gender});
+    const signUp = async({email, fullName , userName , confirmPassword , password, gender}) => {
+        const success = handleInputErrors({email, fullName , userName , confirmPassword , password, gender});
         if(!success) return
     
     //step 4 : in Loading state , fetch API from backend
@@ -19,7 +19,7 @@ const useSignup =()=>{
                 headers : {
                     "Content-Type" : "application/json"
                 },
-                body : JSON.stringify({fullName , userName , confirmPassword , password, gender})
+                body : JSON.stringify({email, fullName , userName , confirmPassword , password, gender})
             })
 
             //step 4.2 : handle response
@@ -50,8 +50,8 @@ const useSignup =()=>{
 export default useSignup
 
 //step 2 : Create a function to handle/Validate input errors
-const handleInputErrors = ({fullName , userName , confirmPassword , password, gender}) => {
-    if (!fullName || !userName || !password || !confirmPassword || !gender) {
+const handleInputErrors = ({email, fullName , userName , confirmPassword , password, gender}) => {
+    if (!email, !fullName || !userName || !password || !confirmPassword || !gender) {
 		toast.error("Please fill in all fields");
 		return false;
 	}

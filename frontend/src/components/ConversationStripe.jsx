@@ -1,8 +1,11 @@
 import React from "react";
-import useConversation from "../zustand/useConversation";
+import {useConversation} from "../zustand/useConversation";
+import { useSocketContext } from "../Context/socketContext";
 const ConversationStripe = ({ conversation, lastIdx }) => {
-  const { selectedConversation, setSelectedConversation } = useConversation();
+  const {selectedConversation, setSelectedConversation } = useConversation();
   const isSelected = selectedConversation?._id === conversation._id;
+  const {onlineUsers} = useSocketContext();
+  const isOnline = onlineUsers.includes(conversation._id) ? "online" : "";
 
   return (
     <>
@@ -11,15 +14,15 @@ const ConversationStripe = ({ conversation, lastIdx }) => {
 		${isSelected ? "bg-sky-500" : ""}`}
         onClick={() => setSelectedConversation(conversation)}
       >
-        <div className="avatar online">
+        <div className={`avatar ${isOnline}`}>
           <div className="w-12 rounded-full">
             <img src={conversation.profilePic} alt="user avatar" />
           </div>
         </div>
         <div className="flex flex-col flex-1">
-          <div className="flex gap-3 justify-between">
-            <p className="font-bold text-gray-500">{conversation.fullName}</p>
-            {/* <span className='text-xl'>🎃</span> */}
+          <div className="flex  flex-col gap- justify-between">
+            <p className="font-bold text-md text-gray-700 dark:text-gray-300">{conversation.fullName}</p>
+            <p className='text-[12px] text-gray-500'>{isOnline ? "online" : null}</p>
             {/* or
 						MessageCount */}
           </div>

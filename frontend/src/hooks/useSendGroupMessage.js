@@ -1,15 +1,15 @@
 import { useState } from "react";
-import {useConversation} from "../zustand/useConversation";
+import {useGroup} from "../zustand/useGroup.js";
 import toast from "react-hot-toast";
 
-const useSendMessage = () => {
+const useSendGroupMessage = () => {
 	const [loading, setLoading] = useState(false);
-	const { messages, setMessages, selectedConversation } = useConversation();
+	const { groupMessages, setGroupMessages, selectedGroup } = useGroup();
 
-	const sendMessage = async (message) => {
+	const sendGroupMessage = async (message) => {
 		setLoading(true);
 		try {
-			const res = await fetch(`/api/messages/send/${selectedConversation._id}`, {
+			const res = await fetch(`/api/messages/groups/send/${selectedGroup._id}`, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -19,7 +19,7 @@ const useSendMessage = () => {
 			const data = await res.json();
 			if (data.error) throw new Error(data.error);
 
-			setMessages([...messages, data]);
+			setGroupMessages([...groupMessages, data]);
 		} catch (error) {
 			toast.error(error.message);
 		} finally {
@@ -27,6 +27,6 @@ const useSendMessage = () => {
 		}
 	};
 
-	return { sendMessage, loading };
+	return { sendGroupMessage, loading };
 };
-export default useSendMessage;
+export default useSendGroupMessage;

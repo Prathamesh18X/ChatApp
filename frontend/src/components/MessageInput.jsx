@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { BsSend } from "react-icons/bs";
 import  useSendMessage  from "../hooks/useSendMessage";
+import useSendGroupMessage from "../hooks/useSendGroupMessage";
+import { useMenu } from "../zustand/useMenu";
 const MessageInput = () => {
   const [message, setMessage] = useState("");
   const { loading, sendMessage } = useSendMessage();
+  const { loading: groupLoading, sendGroupMessage } = useSendGroupMessage();
+  const { selectedMenu } = useMenu();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await sendMessage(message);
+    selectedMenu === "Groups" ? sendGroupMessage(message) : sendMessage(message);
     setMessage("");
   };
 
