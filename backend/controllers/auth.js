@@ -6,6 +6,7 @@ import generateTokenAndSetCookie from "../utils/generateToken.js";
 //signup
 export const signup = async (req, res) => {
     const { input, step } = req.body;
+    // console.log("input : ", input, "step : ", step);
     try {
         if (step === 1) {
             // Step 1: Validate email

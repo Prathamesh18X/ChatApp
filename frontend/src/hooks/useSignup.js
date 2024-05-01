@@ -1,68 +1,105 @@
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { useAuth } from "../Context/AuthContext.jsx";
-const useSignup =()=>{
-    const {setAuthUser} = useAuth();
-    //step 3 : crete useState for Loading state
-    const [loading , setLoading] = useState(false);
-    //step 1: Create a signup function , which takes input from signup form.
-    const signUp = async({email, fullName , userName , confirmPassword , password, gender}) => {
-        const success = handleInputErrors({email, fullName , userName , confirmPassword , password, gender});
-        if(!success) return
-    
-    //step 4 : in Loading state , fetch API from backend
-    setLoading(true);
+
+const useSignup = () => {
+    const { setAuthUser } = useAuth();
+    const [loading, setLoading] = useState(false);
+
+    // Function to handle requests at each step
+    const requestDataForStep = async (input, step) => {
+        setLoading(true);
+
+        // Validate the input at the current step
+        if (!handleInputError(input, step)) {
+            setLoading(false);
+            return false;
+        }
+
         try {
-            //step 4.1 : fetch API
-            const res = await fetch("/api/auth/signup",{
-                method : "POST",
-                headers : {
-                    "Content-Type" : "application/json"
+            // Send request to the server with the input data and current step
+            const response = await fetch("/api/auth/signup", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
                 },
-                body : JSON.stringify({email, fullName , userName , confirmPassword , password, gender})
-            })
+                body: JSON.stringify({ input, step }),
+            });
 
-            //step 4.2 : handle response
-            const data = await res.json()
-            // console.log('here is data from signup api : ' ,data); // --> Testing
+            // Parse the JSON response
+            const data = await response.json();
 
-            
-            //step 4.3 : if signup is successfull , set localstorage else handle error
-            if(data.success){
-                toast.success(data.success + ", " + data.userName)
-                localStorage.setItem("authChatUser",JSON.stringify(data))
-
-                //step 4.4 : set authUser to authContext 
-                setAuthUser(data);
-
-            }else{
-                throw new Error(data.error)
+            // Check the HTTP status code for the response
+            if (response.ok) {
+                // If the final step (step 4) is successful, set the auth user and store data
+                if (step === 4) {
+                    toast.success(`Signup successful, welcome ${data.userName}!`);
+                    localStorage.setItem("authChatUser", JSON.stringify(data));
+                    setAuthUser(data);
+                }
+                return true; // Return true for successful validation or submission
+            } else {
+                // Handle server errors
+                throw new Error(data.error);
             }
         } catch (error) {
-            toast.error(error.message)
-        }finally{
+            // Display the error message to the user using toast
+            toast.error(error.message);
+            return false; // Return false to indicate an error
+        } finally {
+            // Set loading state to false once the request is complete
             setLoading(false);
         }
-    }
-    return {loading,signUp}
-}
+    };
 
-export default useSignup
+    // Function to validate input at each step
+    const handleInputError = (input, step) => {
+        const { email, fullName, userName, password, confirmPassword, gender } = input;
+        if (step === 1) {
+            // Step 1: Validate email
+            if (!email) {
+                toast.error("Please enter a valid email address.");
+                return false;
+            }
+        } else if (step === 2) {
+            // Step 2: Validate username and full name
+            if (!userName) {
+                toast.error("Please enter a valid username.");
+                return false;
+            }
+            if (!fullName) {
+                toast.error("Please enter your full name.");
+                return false;
+            }
+        } else if (step === 3) {
+            // Step 3: Validate password and confirm password
+            if (!password) {
+                toast.error("Please enter a password.");
+                return false;
+            }
+            if (password.length < 6) {
+                toast.error("Password must be at least 6 characters long.");
+                return false;
+            }
+            if (!confirmPassword) {
+                toast.error("Please confirm your password.");
+                return false;
+            }
+            if (password !== confirmPassword) {
+                toast.error("Passwords do not match.");
+                return false;
+            }
+        } else if (step === 4) {
+            // Step 4: Validate gender
+            if (!gender) {
+                toast.error("Please select your gender.");
+                return false;
+            }
+        }
+        return true; // Return true if all input is valid
+    };
 
-//step 2 : Create a function to handle/Validate input errors
-const handleInputErrors = ({email, fullName , userName , confirmPassword , password, gender}) => {
-    if (!email, !fullName || !userName || !password || !confirmPassword || !gender) {
-		toast.error("Please fill in all fields");
-		return false;
-	}
-    if(password.length < 6){
-        toast.error("Password must be at least 6 characters");
-        return false
-    }
-    if (confirmPassword !== password) {
-        toast.error("Passwords do not match");
-        return false
-    }
+    return { loading, requestDataForStep };
+};
 
-    return true
-}
+export default useSignup;
