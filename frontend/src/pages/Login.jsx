@@ -34,7 +34,7 @@
 
     return (
       <div className="flex flex-col items-center justify-center min-w-full mx-auto max-md:p-4 ">
-        <div className="w-full max-w-md p-6 rounded-lg shadow-xl backdrop-filter backdrop-blur-lg bg-opacity-25 border bg-white">
+        <div className="w-full max-w-md p-6 rounded-lg shadow-xl backdrop-filter backdrop-blur-lg bg-opacity-25  border bg-white">
           <div className="flex flex-col">
           <h1 className="text-3xl font-bold text-center text-black">
             <span>Login{" "}</span>
@@ -49,7 +49,9 @@
             {" "}Register
             </Link></span> 
           </div>
-
+          <div className="flex justify-center items-center mt-4">
+            <img className="w-[20%] h-[20%] rounded-full cursor-pointer object-cover " src="https://i.postimg.cc/sgj1j22k/Profile.png" alt="" />
+          </div>
           <form className="mt-6" onSubmit={handleSubmit}>
             <div className="mb-4">
               <label className="flex items-center space-x-2">
@@ -86,8 +88,8 @@
             </div> */}
             
 
-            <div>
-              <button className="bg btn btn-block mt-2" disabled={loading}>
+            <div className="flex justify-center items-center">
+              <button className=" btn btn-block mt-2 w-[30%]" disabled={loading}>
                 {loading ? <span className='loading loading-spinner'></span> : "Login"}
               </button>
             </div>
