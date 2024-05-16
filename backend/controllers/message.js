@@ -1,57 +1,71 @@
 import Conversation from "../models/conversationModel.js";
+import User from "../models/user.js";
 import Message from "../models/messageModel.js";
 import GroupMessage from "../models/groupMessageModel.js";
 import Group from "../models/groupModel.js";
-import User from "../models/user.js";
-import { getReceiverSocketId, getGroupReceiverSocketIds  , io } from "../socket/socket.js";
+import { getSocketId, getGroupReceiverSocketIds  , io } from "../socket/socket.js";
 
 
-export const sendMessage = async (req, res) => {
-  try {
-    const { message } = req.body;
-    const { id: receiverId } = req.params;
-    const senderId = req.user._id; // from protected route
+  export const sendMessage = async (req, res) => {
+    try {
+      const { message } = req.body;
+      const { id: receiverId } = req.params;
+      const senderId = req.user._id; // from protected route
+      // console.log("receiverId", receiverId, "senderId", senderId);
 
-    //check conversation between , create chat/conversation
-    let conversation = await Conversation.findOne({
-      participant: { $all: [senderId, receiverId] },
+      const senderBlocked = await User.findOne({
+        _id: receiverId,
+        blockedUsers: senderId // Check if senderId is in the blockedUsers array
     });
-    if (!conversation) {
-      conversation = await Conversation.create({
-        participant: [senderId, receiverId],
+      const receiverBlocked = await User.findOne({
+        _id: senderId,
+        blockedUsers: receiverId // Check if senderId is in the blockedUsers array
+    });
+
+    if (senderBlocked) {
+        return res.status(403).json({ error: "You are blocked" });
+    }else if(receiverBlocked){
+        return res.status(403).json({ error: "unblock user to send message" })   
+    }
+
+      let conversation = await Conversation.findOne({
+        participant: { $all: [senderId, receiverId] },
       });
-    }
+      if (!conversation) {
+        conversation = await Conversation.create({
+          participant: [senderId, receiverId],
+        });
+      }
+        
+      //create message
+      const newMessage = await Message({
+        senderId,
+        receiverId,
+        message,
+      });
+      if (newMessage) {
+        conversation.message.push(newMessage._id);
+      }
+      //save message and conversation in database.one by one
+      // await conversation.save()
+      // await newMessage.save()
 
-    //create message
-    const newMessage = await Message({
-      senderId,
-      receiverId,
-      message,
-    });
-    if (newMessage) {
-      conversation.message.push(newMessage._id);
-    }
-    //save message and conversation in database.one by one
-    // await conversation.save()
-    // await newMessage.save()
+      //save parallel
+      await Promise.all([conversation.save(), newMessage.save()]);
 
-    //save parallel
-    await Promise.all([conversation.save(), newMessage.save()]);
-
-    // find to who message is being send.
-    const receiverSocketId = getReceiverSocketId(receiverId); //from database
-    if (receiverSocketId) {
-      //send message to receiver
-      // io.to(<socket_id>).emit() used to send events to specific client
-      io.to(receiverSocketId).emit("newMessage", newMessage);
+      // find to who message is being send.
+      const receiverSocketId = getSocketId(receiverId);
+      if (receiverSocketId) {
+        //send message to receiver
+        // io.to(<socket_id>).emit() used to send events to specific client
+        io.to(receiverSocketId).emit("newMessage", newMessage);
+      }
+      res.status(201).json(newMessage);
+    } catch (error) {
+      console.log("error in sendMessage Controller : ", error.message);
+      res.status(500).json({ error: "Internal Server error" });
     }
-    // console.log("message send to :", receiver.userName)
-    res.status(201).json(newMessage);
-  } catch (error) {
-    console.log("error in sendMessage Controller : ", error.message);
-    res.status(500).json({ error: "Internal Server error" });
-  }
-};
+  };
 
 export const getMessage = async (req, res) => {
   try {
@@ -73,6 +87,37 @@ export const getMessage = async (req, res) => {
   } catch (error) {
     console.log("error in getMessage Controller : ", error.message);
     res.status(500).json({ error: "Internal Server error" });
+  }
+};
+
+export const getLastSeenMessages = async (req, res) => {
+  try {
+    const loggedInUserId = req.user._id;
+
+    console.log("loggedInUserId", loggedInUserId);
+    // Find all conversations where the logged-in user is the sender or receiver
+    const conversations = await Conversation.find({
+      $or: [
+        { senderId: loggedInUserId },
+        { receiverId: loggedInUserId }
+      ]
+    })
+    .populate("receiverId")
+    .populate({
+      path: "messages",
+      options: { sort: { createdAt: -1 }, limit: 1 }
+    });
+
+    // Extract receiver users and their last seen messages
+    const lastSeenMessages = conversations.map((conversation) => ({
+      receiverId: conversation.receiverId._id,
+      lastSeenMessage: conversation.messages.length > 0 ? conversation.messages[0]._id : null,
+    }));
+
+    res.status(200).json(lastSeenMessages);
+  } catch (error) {
+    console.error("Error in getLastSeenMessages: ", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
@@ -161,3 +206,48 @@ export const getGroupMessages = async (req, res) => {
       res.status(500).json({ error: "Internal server error" });
   }
 };
+
+export const clearChat = async (req, res) => {
+  try {
+      const { id: receiverId } = req.params;
+      const senderId = req.user._id;
+
+      // Find the conversation between the logged-in user and the receiver
+      const conversation = await Conversation.findOne({
+          participant: { $all: [senderId, receiverId] },
+      });
+
+      if (!conversation) {
+          return res.status(404).json({ error: "Conversation not found" });
+      }
+
+      const messageIds = conversation.message;
+
+      // Using Message.deleteMany to delete all messages at once
+      await Message.deleteMany({ _id: { $in: messageIds } });
+
+      conversation.message = [];
+
+      await conversation.save();
+
+      // Optionally, notify the receiver about the chat clearance
+      const receiverSocketId = getSocketId(receiverId);
+      const senderSocketId = getSocketId(senderId);
+      if (receiverSocketId) {
+          io.to([receiverSocketId, senderSocketId]).emit("chatCleared");
+      }
+      if(senderSocketId) {
+          io.to( senderSocketId).emit("chatCleared");
+      }
+      // Respond with success
+      res.status(200).json({ message: "Chat cleared successfully" });
+  } catch (error) {
+      console.log("Error in clearChat controller: ", error.message);
+      res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+
+
+
+

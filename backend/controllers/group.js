@@ -1,4 +1,8 @@
 import Group from "../models/groupModel.js";
+import { io } from "../socket/socket.js";
+import { uploadToCloudinary } from "../utils/cloudinary.js";
+import getDataUri from "../utils/dataURI.js";
+
 
 export const getGroups = async (req, res) => {//working
     try {
@@ -21,12 +25,15 @@ export const getGroups = async (req, res) => {//working
 
 
 
-export const createGroup = async (req, res) => {//working
+export const createGroup = async (req, res) => {
     try {
         const { name, participants } = req.body;
+        const participantsArray = JSON.parse(participants);
+        console.log(name, participants);
+        const groupPicFile = req.file;
 
         // Validate input
-        if (!name || !participants || !Array.isArray(participants)) {
+        if (!name || !participantsArray || !Array.isArray(participantsArray)) {
             return res.status(400).json({ error: "Invalid input data" });
         }
 
@@ -36,14 +43,30 @@ export const createGroup = async (req, res) => {//working
             return res.status(400).json({ error: "Group name already exists" });
         }
 
+        // Handle group picture upload
+        let groupPicUrl = null;
+        if (groupPicFile) {
+            const groupPicUri = await getDataUri(groupPicFile);
+            const result = await uploadToCloudinary(groupPicUri.content);
+            groupPicUrl = result.url;
+        }
+
+        // Fallback to dummy image URL if no group picture was uploaded
+        const dummyGroupPic = `https://i.postimg.cc/ZRBTXn9y/group-Dummy.png`;
+        groupPicUrl = groupPicUrl || dummyGroupPic;
+
         // Create a new group with the provided name and participants
         const newGroup = new Group({
-            name ,
-            participants,
+            name,
+            groupPic: groupPicUrl,
+            participants: participantsArray,
         });
 
         // Save the new group to the database
         await newGroup.save();
+
+        // Emit the "newGroupCreated" event to notify clients
+        io.emit("newGroupCreated", newGroup);
 
         // Return the newly created group information
         res.status(201).json({

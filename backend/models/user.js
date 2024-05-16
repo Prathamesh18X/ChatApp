@@ -29,6 +29,16 @@ const userSchema = new mongoose.Schema(
 			type: String,
 			unique: true,
 		},
+		bio: {
+			type: String,
+			maxlength: 200,
+		},
+		blockedUsers: [
+			{
+			  type: mongoose.Schema.Types.ObjectId,
+			  ref: "User",
+			},
+		  ],
 	},
 	{ timestamps: true }
 );

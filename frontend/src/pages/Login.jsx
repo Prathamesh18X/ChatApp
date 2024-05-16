@@ -6,10 +6,6 @@
   // import { auth, provider } from "../firebase/firebaseConfig";
   // import {signInWithPopup} from "firebase/auth";
 
-
-
-
-
   const Login = () => {
   const {loading ,login} = useLogin();
   const [userName ,setUserName] = useState("");
@@ -52,7 +48,7 @@
           <div className="flex justify-center items-center mt-4">
             <img className="w-[20%] h-[20%] rounded-full cursor-pointer object-cover " src="https://i.postimg.cc/sgj1j22k/Profile.png" alt="" />
           </div>
-          <form className="mt-6" onSubmit={handleSubmit}>
+          <form className="mt-6 text-slate-700" onSubmit={handleSubmit}>
             <div className="mb-4">
               <label className="flex items-center space-x-2">
               <IoPersonSharp  className=" h-5 w-5"/>
@@ -89,7 +85,7 @@
             
 
             <div className="flex justify-center items-center">
-              <button className=" btn btn-block mt-2 w-[30%]" disabled={loading}>
+              <button className=" btn btn-block text-slate-200 bg-slate-700 mt-2 w-[30%]" disabled={loading}>
                 {loading ? <span className='loading loading-spinner'></span> : "Login"}
               </button>
             </div>

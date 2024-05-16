@@ -5,6 +5,9 @@ const groupSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    groupPic: {
+        type: String,
+    },
     participants: [
         {
             type: mongoose.Schema.Types.ObjectId,

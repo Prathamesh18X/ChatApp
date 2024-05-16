@@ -1,34 +1,39 @@
-
 import { useEffect } from "react";
-
 import { useSocketContext } from "../Context/socketContext";
-import {useConversation} from "../zustand/useConversation";
-import {useGroup} from "../zustand/useGroup";
-// import notificationSound from "../assets/notificationSound.mp3";
-
+import { useConversation } from "../zustand/useConversation";
+import { useGroup } from "../zustand/useGroup";
 
 const useListenMessages = () => {
-	const { socket } = useSocketContext();
-	const { messages, setMessages } = useConversation();
-	const { groupMessages, setGroupMessages } = useGroup();
+    const { socket } = useSocketContext();
+    const { messages, setMessages } = useConversation();
+    const { groupMessages, setGroupMessages } = useGroup();
 
-	useEffect(() => {
-		socket?.on("newMessage", (newMessage) => {
-			newMessage.shouldShake = true;
-			// const sound = new Audio(notificationSound);
-			// sound.play();
-			setMessages([...messages, newMessage]);
-		});
+    useEffect(() => {
+        const handleNewMessage = (newMessage) => {
+            // newMessage.shouldShake = true;
+            setMessages([...messages, newMessage]);
+        };
 
-		socket?.on("newGroupMessage", (newGroupMessage) => {
-			setGroupMessages([...groupMessages, newGroupMessage]);
-		})
+        const handleNewGroupMessage = (newGroupMessage) => {
+            setGroupMessages([...groupMessages, newGroupMessage]);
+        };
 
-		return () => {
-		socket?.off("newMessage");
-		socket?.off("newGroupMessage");
-	};
-		
-	}, [socket, setMessages, messages, setGroupMessages, groupMessages]);
+        const handleChatCleared = () => {
+            setMessages([]);
+        };
+
+        socket?.on("newMessage", handleNewMessage);
+        socket?.on("newGroupMessage", handleNewGroupMessage);
+        socket?.on("chatCleared", handleChatCleared);
+
+        return () => {
+            socket?.off("newMessage", handleNewMessage);
+            socket?.off("newGroupMessage", handleNewGroupMessage);
+            socket?.off("chatCleared", handleChatCleared);
+        };
+    }, [socket, setMessages, messages, setGroupMessages, groupMessages]);
+
+    return null;
 };
+
 export default useListenMessages;

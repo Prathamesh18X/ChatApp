@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import GenderCheckbox from "../components/GenderCheckbox";
+import GenderCheckbox from "../components/QuickButtons/GenderCheckbox";
 import useSignup from "../hooks/useSignup";
 import toast from "react-hot-toast";
 
 const SignUp = () => {
     const { loading, requestDataForStep } = useSignup();
-    const [step, setStep] = useState(4);
+    const [step, setStep] = useState(1);
     const [profilePic, setProfilePic] = useState(null);
     const [profilePicUrl, setProfilePicUrl] = useState(null); // New state for the image URL
     const [input, setInput] = useState({
@@ -45,16 +45,22 @@ const SignUp = () => {
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
-        setProfilePic(file); // Update the state with the selected file
-
-        // Create a URL for the selected image file and set it in the state
+        setProfilePic(file); 
         const imageUrl = URL.createObjectURL(file);
         setProfilePicUrl(imageUrl);
     };
+    //enter key down
+    
 
     return (
         <div className="flex flex-col items-center justify-center min-w-full mx-auto max-md:p-4">
-            <div className="w-full max-w-md p-6 rounded-lg shadow-xl backdrop-filter backdrop-blur-lg  border-2 bg-white border-c">
+             <ul className="absolute top-10 steps steps-vertical lg:steps-horizontal text-black text-[10px]">
+                    <li className={`step ${step >= 1 ? "step-primary" : ""}`}>Email</li>
+                    <li className={`step ${step >= 2 ? "step-primary" : ""}`}>Profile</li>
+                    <li className={`step ${step >= 3 ? "step-primary" : ""}`}>Password</li>
+                    <li className={`step ${step >= 4 ? "step-primary" : ""}`}>Personal</li>
+                </ul>
+            <div className="w-full max-w-md p-6 rounded-lg shadow-xl backdrop-filter backdrop-blur-lg bg-opacity-25  border-2 bg-white border-c">
                 <div className="flex flex-col text-center text-black">
                     <h1 className="flex flex-col text-3xl font-bold text-center text-black">
                         <span>Sign Up</span>
@@ -74,12 +80,12 @@ const SignUp = () => {
                     {/* Step 1: Email */}
                     {step === 1 && (
                         <>
-                        
+                        <label htmlFor="email"className="text-gray-900">Enter email</label>
                             <div className="py-1">
                                 <input
                                     type="email"
-                                    placeholder="Email"
-                                    className="bg-gray-300 w-full input input-bordered h-10"
+                                    placeholder="abc@gmail.com"
+                                    className="bg-white w-full input input-bordered h-10"
                                     value={input.email}
                                     onChange={(e) =>
                                         setInput({ ...input, email: e.target.value })
@@ -115,7 +121,7 @@ const SignUp = () => {
                                 <input
                                     type="text"
                                     placeholder="Username"
-                                    className="bg-gray-300 text-center w-50  input input-bordered h-10"
+                                    className="bg-white text-center w-50  input input-bordered h-10"
                                     value={input.userName}
                                     onChange={(e) =>
                                         setInput({ ...input, userName: e.target.value })}
@@ -134,7 +140,7 @@ const SignUp = () => {
                                 <input
                                     type="password"
                                     placeholder="Enter Password"
-                                    className="bg-gray-300 w-full input input-bordered h-10"
+                                    className="bg-white w-full input input-bordered h-10"
                                     value={input.password}
                                     onChange={(e) =>
                                         setInput({ ...input, password: e.target.value })}
@@ -145,7 +151,7 @@ const SignUp = () => {
                                 <input
                                     type="password"
                                     placeholder="Confirm Password"
-                                    className="bg-gray-300 w-full input input-bordered h-10"
+                                    className="bg-white w-full input input-bordered h-10"
                                     value={input.confirmPassword}
                                     onChange={(e) =>
                                         setInput({ ...input, confirmPassword: e.target.value })}
@@ -167,7 +173,7 @@ const SignUp = () => {
                                     id="fullName"
                                     type="text"
                                     placeholder="Full Name"
-                                    className="bg-gray-300 w-full input input-bordered h-10"
+                                    className="bg-white w-full input input-bordered h-10"
                                     value={input.fullName}
                                     onChange={(e) =>
                                         setInput({ ...input, fullName: e.target.value })}
@@ -182,7 +188,7 @@ const SignUp = () => {
                         {step > 1 && (
                             <button
                                 type="button"
-                                className="btn border border-slate-700"
+                                className="btn  bg-slate-700"
                                 onClick={handlePreviousStep}
                                 disabled={loading}
                             >
@@ -194,7 +200,7 @@ const SignUp = () => {
                         {step < 4 ? (
                             <button
                                 type="button"
-                                className="btn border border-slate-700"
+                                className="btn  bg-slate-700"
                                 onClick={handleNextStep}
                                 disabled={loading}
                             >

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useAuth } from "../Context/AuthContext";
-import { useMenu } from "../zustand/useMenu";
+import { useAuth } from "../../Context/AuthContext";
+import { useMenu } from "../../zustand/useMenu";
 
 const convertToHourMinute = (timeString) => {
   const date = new Date(timeString);
@@ -37,7 +37,7 @@ const Message = ({ message, color }) => {
 
   return (
     <div className={chatClassName}>
-      <div className="chat-image avatar"></div>
+      {/* <div className="chat-image avatar"></div> */}
       <div
         className={`chat-bubble px-5 py-2 justify-center items-start rounded-lg flex flex-col ${chatBubbleClassName}`}
       >

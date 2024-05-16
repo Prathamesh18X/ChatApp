@@ -17,16 +17,13 @@ const useSignup = () => {
     }
 
     try {
-      let response;
-      console.log("input", input, step, profilePic);
       const formData = new FormData();
       formData.append("input", JSON.stringify({input, step}));
       formData.append("step", step);
-      // console.log(typeof formData);
       if (profilePic) {
-        formData.append("profilePic", profilePic); // Append the file directly
+        formData.append("profilePic", profilePic);
       }    
-      response = await fetch("/api/auth/signup", {
+      const response = await fetch("/api/auth/signup", {
         method: "POST",
         body: formData,
       });
