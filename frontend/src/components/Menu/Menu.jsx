@@ -5,12 +5,11 @@ import { HiUserGroup } from "react-icons/hi2";
 import { FaUserGroup } from "react-icons/fa6";
 import { IoSettingsSharp } from "react-icons/io5";
 import { FaWandMagicSparkles } from "react-icons/fa6";
-
 import ThemeBtn from "../QuickButtons/ThemeBtn.jsx";
 import ProfileModal from "../Modals/ProfileModal.jsx";
 
 const Menu = () => {
-  const { selectedMenu, setSelectedMenu } = useMenu();
+  const { selectedMenu, setSelectedMenu ,openChats} = useMenu();
 
   const handleChatClick = () => {
     setSelectedMenu("Chats");
@@ -26,62 +25,81 @@ const Menu = () => {
     setSelectedMenu("Community");
   };
   return (
-    <div className="flex flex-grow-0 flex-col h-full justify-between py-5">
+    <div className={`${openChats ? "max-md:hidden" : ""} max-md:absolute max-md:bottom-0 max-md:py-2 max-md:bg-white flex max-md:w-full flex-row md:flex-grow-0 md:flex-col md:h-full md:justify-between py-5`}>
       {/* Top Section - Chat Buttons */}
-      <div className="flex flex-col space-y-2">
+      <div className="flex flex-row justify-around w-full md:flex-col space-y-2">
         {/* <div className="px-4 text-black">
           <img src="./public/ChatApp.svg" alt="not found"  />
         </div> */}
-        <button className="p-2">
-          <img src="./public/ChatApp.svg" alt="not found" className="w-10" />
-          <span className="relative bottom-2 text-[10px] text-[#0086cd] dark:text-gray-300 font-bold"> {/*logo*/}
+        <button className="flex-col justify-center items-center  p-2 flex max-md:hidden">
+          <div className=" font-bold text-[12px] ">
+            <img
+            src="https://res.cloudinary.com/da1mwmvno/image/upload/v1716113819/Logo/rn4ihnpiptrahzc4pwg9.svg"
+            alt="not found"
+            className="w-10"
+          />
+          <span className=" bottom-2 text-[10px] text-[#0086cd] dark:text-gray-300 font-bold">
+            {" "}
             ChatApp
           </span>
+          </div>
         </button>
         <button
           className={`${
             selectedMenu === "Chats"
-              ? "bg-white dark:bg-slate-700"
-              : "bg-blue-200  dark:bg-slate-900"
-          } p-3 rounded-l-xl cursor-pointer  flex justify-center text-center text-black dark:text-gray-300 `}
+              ? "max-md:text-blue-600 md:bg-white dark:bg-slate-700"
+              : "md:bg-blue-200  dark:bg-slate-900"
+          } p-3 rounded-l-xl cursor-pointer   text-center text-black dark:text-gray-300 `}
           onClick={handleChatClick}
         >
-          <BsChatLeftTextFill className="h-5 w-5" />
+          <div className="flex-col flex font-bold text-[12px] items-center">
+            <BsChatLeftTextFill className="h-5 w-5" />
+            <span>Chats</span>
+          </div>
         </button>
         <button
           className={`${
             selectedMenu === "ChatApp AI"
-              ? "bg-white dark:bg-slate-700"
-              : "bg-blue-200  dark:bg-slate-900"
+              ? "max-md:text-blue-600 md:bg-white dark:bg-slate-700"
+              : "md:bg-blue-200  dark:bg-slate-900"
           } p-3 rounded-l-xl cursor-pointer  flex justify-center text-center text-black dark:text-gray-300 `}
           onClick={handleAiClick}
         >
-          <div className="flex gap-1 font-bold text-[12px] items-center"><FaWandMagicSparkles className="h-5 w-5" /><div>AI</div></div>
+          <div className="flex flex-col font-bold text-[12px] items-center">
+            <FaWandMagicSparkles className="h-5 w-5" />
+            <span>AI assistant</span>
+          </div>
         </button>
         <button
           className={`${
             selectedMenu === "Groups"
-              ? "bg-white dark:bg-slate-700"
-              : "bg-blue-200  dark:bg-slate-900"
+              ? "max-md:text-blue-600 md:bg-white dark:bg-slate-700"
+              : "md:bg-blue-200  dark:bg-slate-900"
           } p-3 rounded-l-xl cursor-pointer flex justify-center text-center text-black  dark:text-gray-300  `}
           onClick={handleGroupClick}
         >
+        <div className="flex flex-col font-bold text-[12px] items-center">
           <FaUserGroup className="h-5 w-5" />
+          <span>Groups</span>
+        </div>
         </button>
         <button
           className={`${
             selectedMenu === "Community"
-              ? "bg-white dark:bg-slate-700"
-              : "bg-blue-200  dark:bg-slate-900"
+              ? "max-md:text-blue-600 md:bg-white dark:bg-slate-700"
+              : "md:bg-blue-200  dark:bg-slate-900"
           } p-3 rounded-l-xl cursor-pointer flex justify-center text-center text-black  dark:text-gray-300  `}
           onClick={handleCommunityClick}
         >
+          <div className="flex flex-col font-bold text-[12px] items-center">
           <HiUserGroup className="h-5 w-5" />
+          <span>Community</span>
+          </div>
         </button>
       </div>
 
       {/* Bottom Section - Logout and Theme Buttons */}
-      <div className="flex flex-col text-black dark:text-gray-300  items-center space-y-4">
+      <div className="max-md:hidden flex flex-col text-black dark:text-gray-300  items-center space-y-4">
         <ThemeBtn />
         <IoSettingsSharp
           className="h-6 w-6 cursor-pointer"

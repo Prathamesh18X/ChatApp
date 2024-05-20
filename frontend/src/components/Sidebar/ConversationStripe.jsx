@@ -2,6 +2,7 @@ import React from "react";
 import {useConversation} from "../../zustand/useConversation";
 import { useSocketContext } from "../../Context/socketContext";
 import ImageModal from "../Modals/ImageModal";
+import { useMenu } from "../../zustand/useMenu";
 const ConversationStripe = ({ conversation, lastIdx }) => {
   const {selectedConversation, setSelectedConversation } = useConversation();
   const isSelected = selectedConversation?._id === conversation._id;
@@ -9,6 +10,7 @@ const ConversationStripe = ({ conversation, lastIdx }) => {
   const isOnline = onlineUsers.includes(conversation._id) ? "online" : "";
   const modal = document.getElementById("image-modal");
   const profilePic = selectedConversation?.profilePic;
+  const {openChats, setOpenChats} = useMenu();
   // console.log(profilePic);
 
   return (
@@ -16,7 +18,7 @@ const ConversationStripe = ({ conversation, lastIdx }) => {
       <div
         className={`flex gap-2 items-center hover:bg-sky-200 dark:hover:bg-sky-700 rounded p-2 py-1 cursor-pointer 
 		${isSelected ? "bg-sky-300 dark:bg-sky-900" : ""}`}
-        onClick={() => setSelectedConversation(conversation)}
+        onClick={() => {setSelectedConversation(conversation); setOpenChats(true)}}
       >
         <div className={`avatar ${isOnline}`}>
           <div className="w-12 rounded-full">

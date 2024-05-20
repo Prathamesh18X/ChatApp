@@ -3,17 +3,19 @@
   import { FaKey } from "react-icons/fa";
   import { IoPersonSharp } from "react-icons/io5";
   import useLogin from "../hooks/useLogin";
+  import { useConversation } from "../zustand/useConversation";
   // import { auth, provider } from "../firebase/firebaseConfig";
   // import {signInWithPopup} from "firebase/auth";
 
   const Login = () => {
   const {loading ,login} = useLogin();
-  const [userName ,setUserName] = useState("");
+  const [email ,setEmail] = useState("");
   const [password ,setPassword] = useState("");
+  const {profilePic,setProfilePic } = useConversation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login({userName , password});
+    await login({email , password});
   }
   // const [value,setValue] = useState('')
   //   const handleGoogleLogin =()=>{
@@ -30,6 +32,18 @@
 
     return (
       <div className="flex flex-col items-center justify-center min-w-full mx-auto max-md:p-4 ">
+        <button className="absolute top-0 left-0 mt-4 ml-4  p-2 max-md:hidden">
+          <div className=" font-bold text-[12px] ">
+            <img
+            src="https://res.cloudinary.com/da1mwmvno/image/upload/v1716113819/Logo/rn4ihnpiptrahzc4pwg9.svg"
+            alt="not found"
+            className="w-14"
+          />
+          <span className=" text-xl text-[#0086cd] dark:text-gray-300 font-bold">
+            ChatApp
+          </span>
+          </div>
+        </button>
         <div className="w-full max-w-md p-6 rounded-lg shadow-xl backdrop-filter backdrop-blur-lg bg-opacity-25  border bg-white">
           <div className="flex flex-col">
           <h1 className="text-3xl font-bold text-center text-black">
@@ -41,12 +55,13 @@
           <Link
               to="/signup"
               className="text-blue-600 hover:underline"
+              onClick={() => setProfilePic("")}
             >
             {" "}Register
             </Link></span> 
           </div>
           <div className="flex justify-center items-center mt-4">
-            <img className="w-[20%] h-[20%] rounded-full cursor-pointer object-cover " src="https://i.postimg.cc/sgj1j22k/Profile.png" alt="" />
+            <img className="w-[20%] h-[20%] rounded-full  object-cover " src={profilePic? profilePic : `https://res.cloudinary.com/da1mwmvno/image/upload/v1716117699/assets/tquplnnni1taoknudjny.png`} alt="" />
           </div>
           <form className="mt-6 text-slate-700" onSubmit={handleSubmit}>
             <div className="mb-4">
@@ -55,10 +70,11 @@
 
                 <input
                   type="text"
-                  placeholder="Enter username"
+                  placeholder="Enter Email"
                   className="bg-white w-full h-10 px-3 py-2 border rounded-md"
-                  onChange={(e) => setUserName(e.target.value)}
-                  value={userName}
+                  onChange={(e) => {setEmail(e.target.value),setProfilePic("")}}
+                  onBlur={handleSubmit}
+                  value={email}
                 />
               </label>
             </div>

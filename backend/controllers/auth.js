@@ -61,11 +61,9 @@ export const signup = async (req, res) => {
           ? fullName.split(" ")
           : [fullName, ""];
 
-
         const dummyProfilePic = `https://avatar.iran.liara.run/username?username=${firstname}${
           lastname ? "+" + lastname : ""
         }`;
-
 
         // Create new user
         const newUser = new User({
@@ -106,15 +104,27 @@ export const signup = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    const { userName, password } = req.body;
-    const user = await User.findOne({ userName });
+    const { email, password } = req.body;
+    try {
+     if(!password){
+      const user = await User.findOne({ email });
+      return res
+        .status(201)
+        .json({ profilePic: user.profilePic, loading: "loading" });
+     }
+    } catch {
+      return res
+        .status(200)
+        .json({ warning: "Email not found", loading: "loading" });
+    }
+    const user = await User.findOne({ email });
     const isPasswordCorrect = await bcrypt.compare(
       password,
       user?.password || ""
     );
 
     if (!user || !isPasswordCorrect) {
-      return res.status(400).json({ error: "Invalid Credentials" });
+      return res.status(400).json({ error: "Invalid Password " });
     }
 
     generateTokenAndSetCookie(user._id, res);
@@ -135,45 +145,39 @@ export const login = async (req, res) => {
 
 export const updateUserData = async (req, res) => {
   try {
-      const loggedInUserId = req.user._id;
-      const { userName, fullName} = req.body;
-      const profilePicFile = req.file;
-      const update = {};
-      
-      if (userName) {
-          const existingUserName = await User.findOne({ userName });
-          if (existingUserName && existingUserName._id.toString() !== loggedInUserId.toString()) {
-              return res.status(400).json({ error: "User name already exists" });
-          }
-          update.userName = userName;
-      }
-      
-      if (fullName) {
-        update.fullName = fullName;
-      }
-      
-      
-      // if (email) {
-      //     const existingEmail = await User.findOne({ email });
-      //     if (existingEmail && existingEmail._id.toString() !== loggedInUserId.toString()) {
-      //         return res.status(400).json({ error: "Email already exists" });
-      //     }
-      //     update.email = email;
-      // }
+    const loggedInUserId = req.user._id;
+    const { userName, fullName } = req.body;
+    const profilePicFile = req.file;
+    const update = {};
 
-      // Upload profile picture
-      if (profilePicFile) {
-        const profilePicUri = getDataUri(profilePicFile);
-        const result = await uploadToCloudinary(profilePicUri.content);
-        update.profilePic = result.url;
+    if (userName) {
+      const existingUserName = await User.findOne({ userName });
+      if (
+        existingUserName &&
+        existingUserName._id.toString() !== loggedInUserId.toString()
+      ) {
+        return res.status(400).json({ error: "User name already exists" });
       }
-      
-      const updatedUser = await User.findByIdAndUpdate(loggedInUserId, update, { new: true });
-      return res.status(200).json(updatedUser);
-      
+      update.userName = userName;
+    }
+
+    if (fullName) {
+      update.fullName = fullName;
+    }
+
+    if (profilePicFile) {
+      const profilePicUri = getDataUri(profilePicFile);
+      const result = await uploadToCloudinary(profilePicUri.content);
+      update.profilePic = result.url;
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(loggedInUserId, update, {
+      new: true,
+    });
+    return res.status(200).json(updatedUser);
   } catch (error) {
-      console.error(error);
-      return res.status(500).json({ error: "Internal server error" });
+    console.error(error);
+    return res.status(500).json({ error: "Internal server error" });
   }
 };
 
@@ -187,23 +191,22 @@ export const logout = async (req, res) => {
   }
 };
 
+export const deleteSelfAccount = async (req, res) => {
+  try {
+    const userId = req.params;
+    const loggedInUserId = req.user._id;
+    const data = req.body;
 
-
-export const deleteSelfAccount = async (req, res) => {//working
-try {
-  const userId = req.params;
-  const loggedInUserId = req.user._id;
-  const data = req.body;
-
-
-  if (loggedInUserId.toString() === userId.id && data.input === "Delete My Account") {
-    await User.findByIdAndDelete(loggedInUserId);
-    res.cookie("jwt", "", { maxAge: 0 });
+    if (
+      loggedInUserId.toString() === userId.id &&
+      data.input === "Delete My Account"
+    ) {
+      await User.findByIdAndDelete(loggedInUserId);
+      res.cookie("jwt", "", { maxAge: 0 });
+    }
+    res.status(200).json({ success: "User deleted successfully" });
+  } catch (error) {
+    console.error("error in deleteUser: ", error.message);
+    res.status(500).json({ error: "Internal server error" });
   }
-  res.status(200).json({ success: "User deleted successfully" });
-}
-catch (error) {
-  console.error("error in deleteUser: ", error.message);
-  res.status(500).json({ error: "Internal server error" });
-}
-}
+};

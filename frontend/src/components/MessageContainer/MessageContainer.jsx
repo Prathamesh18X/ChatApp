@@ -27,7 +27,7 @@ const NoChatSelected = () => {
 const MessageContainer = () => {
   const { selectedConversation, setSelectedConversation } = useConversation();
   const { selectedGroup, setSelectedGroup } = useGroup();
-  const { selectedMenu } = useMenu();
+  const { selectedMenu ,openChats, setOpenChats } = useMenu();
   const profileInfoModal = document.getElementById("profile-info-modal");
 
   useEffect(() => {
@@ -51,18 +51,17 @@ const MessageContainer = () => {
   switch (selectedMenu) {
     case "Chats":
       return (
-        <div
-          className="flex flex-grow flex-col w-auto my-2">
+        <div className={`${openChats ? "" : "max-md:hidden"}  flex flex-grow flex-col w-auto my-2`}>
           {!selectedConversation ? (
             <NoChatSelected/>
             
           ) : (
             <>
-              <div className="flex justify-between bg-slate-500 px-4 py-2 mb-2">
+              <div className="flex justify-between bg-white dark:bg-slate-700 px-4 py-2 mb-2">
                 <div className="flex ">
                 <button
-                  className="sm:hidden  gap-2 "
-                  onClick={() => setSelectedConversation(null)}
+                  className="md:hidden  gap-2 "
+                  onClick={() => {setSelectedConversation(null); setOpenChats(false);}}
                 >
                   <IoMdArrowRoundBack className="h-5 w-5" />
                 </button>
@@ -75,7 +74,7 @@ const MessageContainer = () => {
                     
                   />
                 </div>
-                <div className=" flex flex-col justify-center text-gray-900 ">
+                <div className=" flex flex-col justify-center text-gray-900 dark:text-gray-300 ">
                   <span onClick={() => profileInfoModal.showModal()} className=" cursor-pointer text-lg font-bold">
                     {selectedConversation.userName}
                   </span>
@@ -102,15 +101,15 @@ const MessageContainer = () => {
     case "Groups":
       return (
         <div
-        className="flex flex-grow flex-col w-auto my-2">
+        className={`${openChats ? "" : "max-md:hidden"} flex flex-grow flex-col w-auto my-2`}>
           {!selectedGroup ? (
             <NoChatSelected />
           ) : (
             <>
               <div className="flex bg-slate-500 px-4 py-2 mb-2">
                 <button
-                  className="sm:hidden  gap-2 "
-                  onClick={() => setSelectedGroup(null)}
+                  className="md:hidden  gap-2 "
+                  onClick={() => {setSelectedConversation(null); setOpenChats(false);}}
                 >
                   <IoMdArrowRoundBack className="h-5 w-5" />
                 </button>
@@ -141,7 +140,7 @@ const MessageContainer = () => {
       );
       case "ChatApp AI":
         return(
-          <GeminiChatArea/>
+            <GeminiChatArea/>
         )
     default:
       break;

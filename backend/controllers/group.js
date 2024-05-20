@@ -4,7 +4,7 @@ import { uploadToCloudinary } from "../utils/cloudinary.js";
 import getDataUri from "../utils/dataURI.js";
 
 
-export const getGroups = async (req, res) => {//working
+export const getGroups = async (req, res) => {
     try {
         // Get the logged-in user's ID from the request
         const loggedInUserId = req.user._id;

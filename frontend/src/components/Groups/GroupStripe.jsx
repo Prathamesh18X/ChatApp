@@ -1,7 +1,9 @@
 import React from "react";
 import {useGroup} from "../../zustand/useGroup.js";
+import { useMenu } from "../../zustand/useMenu.js";
 const GroupsStripe = ({ group }) => {
   const {selectedGroup, setSelectedGroup } = useGroup();
+  const { openChats, setOpenChats } = useMenu();
   // console.log(group);
   const isSelected = selectedGroup?._id === group._id;
 
@@ -10,7 +12,7 @@ const GroupsStripe = ({ group }) => {
       <div
         className={`flex gap-2 items-center hover:bg-sky-400 rounded p-2 py-1 cursor-pointer 
 		${isSelected ? "bg-sky-500" : ""}`}
-        onClick={() => setSelectedGroup(group)}
+        onClick={() => {setSelectedGroup(group); setOpenChats(true)}}
       >
         <div className={`avatar`}>
           <div className="w-12 rounded-full">
@@ -19,7 +21,7 @@ const GroupsStripe = ({ group }) => {
         </div>
         <div className="flex flex-col flex-1">
           <div className="flex  flex-col gap- justify-between">
-            <p className="font-bold text-gray-500">{group.name}</p>
+            <p className="font-bold text-gray-900">{group.name}</p>
 
           </div>
         </div>

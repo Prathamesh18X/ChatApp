@@ -11,7 +11,6 @@ import { getSocketId, getGroupReceiverSocketIds  , io } from "../socket/socket.j
       const { message } = req.body;
       const { id: receiverId } = req.params;
       const senderId = req.user._id; // from protected route
-      // console.log("receiverId", receiverId, "senderId", senderId);
 
       const senderBlocked = await User.findOne({
         _id: receiverId,
@@ -128,7 +127,6 @@ export const sendGroupMessage = async (req, res) => {
         const { id : groupId } = req.params;
         // Extract the message content from the request body
         const { message } = req.body;
-        // console.log("message : ", req.user._id );
         // Get the sender's user ID from the request (set by the protectRoute middleware)
         const senderId = req.user._id; 
         const senderUserName = req.user.userName;

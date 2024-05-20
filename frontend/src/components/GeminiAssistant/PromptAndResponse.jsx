@@ -12,21 +12,21 @@ export const PromptAndResponse = () => {
         <>
           <div className="flex flex-col">
                     <div className="chat chat-end ">
-                        <div><img src={authUser.profilePic} alt="" className='w-12 h-12 rounded-full m-2' /></div>
+                        <div><img src={authUser.profilePic} alt="" className='w-12 h-12 rounded-full m-2 max-md:m-1' /></div>
                         <p className="chat-bubble bg-slate-100 text-black px-8 mx-2 flex justify-center items-center">{recentPrompt}</p>
                     </div>
                     {loading ? (
                         <div className="chat chat-start p-0">
                         <div><SiGooglegemini className='text-4xl text-blue-500 animate-spin ' style={{ animationDuration: '2s' }} /></div>
-                        <div className="chat-bubble bg-slate-100 text-black px-8 mx-2 flex justify-center items-center">
+                        <div className="chat-bubble bg-slate-100 text-black max-md:px-4 px-8 mx-2 flex justify-center items-center">
                             <span className="loading loading-dots loading-md"></span>
                         </div>
                     </div>
                       
                     ) : (
                         <div className="chat chat-start ">
-                            <div className='text-blue-500'><SiGooglegemini className='text-4xl '/></div>
-                            <p className="chat-bubble bg-slate-100 text-black px-8 mx-2" dangerouslySetInnerHTML={{ __html: resultData }}></p>
+                            <div className='text-blue-500'><SiGooglegemini className='text-4xl max-md:text-2xl '/></div>
+                            <p className="chat-bubble bg-slate-100 text-black max-md:px-4 px-8 mx-2" dangerouslySetInnerHTML={{ __html: resultData }}></p>
                         </div>
                     )}
                 </div>

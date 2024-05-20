@@ -1,33 +1,47 @@
-import React from 'react';
+import React from "react";
 
 const GenderCheckbox = ({ onCheckboxChange, selectedGender }) => {
   // Sample image URLs
-  const maleImageUrl = 'https://i.postimg.cc/fyf2vkZ7/Male.png'; // Replace with your male image URL
-  const femaleImageUrl = 'https://i.postimg.cc/4xf6cBmS/Female.png'; // Replace with your female image URL
+  const maleImageUrl =
+    "https://res.cloudinary.com/da1mwmvno/image/upload/v1716115249/assets/h3w4nlqongcqiuzuyilg.png";
+  const femaleImageUrl =
+    "https://res.cloudinary.com/da1mwmvno/image/upload/v1716115300/assets/lwdxnvhedk9szuin5eem.png";
 
   return (
-    <div className='flex gap-4 justify-center items-center'>
+    <div className="flex gap-4 justify-center items-center">
+      <div className="flex flex-col items-center text-gray-900">
+        <div
+          className={`relative form-control rounded-lg cursor-pointer w-24 h-24 bg-cover bg-center transition-all duration-200 ease-in-out ${
+            selectedGender === "male" ? "bg-gray-300 bg-opacity-50" : ""
+          }`}
+          style={{
+            backgroundImage: `url(${maleImageUrl})`,
+            borderRadius: "50%",
+          }}
+          onClick={() => onCheckboxChange("male")}
+        >
+          {selectedGender === "male" && (
+            <div className="absolute inset-0 bg-gray-900 bg-opacity-25 rounded-full" />
+          )}
+        </div>
+        <span className="font-bold">Male</span>
+      </div>
+      <div className="flex flex-col items-center text-gray-900">
       <div
         className={`relative form-control rounded-lg cursor-pointer w-24 h-24 bg-cover bg-center transition-all duration-200 ease-in-out ${
-          selectedGender === 'male' ? 'bg-gray-300 bg-opacity-50' : ''
+          selectedGender === "female" ? "bg-gray-300 bg-opacity-50" : ""
         }`}
-        style={{ backgroundImage: `url(${maleImageUrl})`, borderRadius: '50%' }}
-        onClick={() => onCheckboxChange('male')}
+        style={{
+          backgroundImage: `url(${femaleImageUrl})`,
+          borderRadius: "50%",
+        }}
+        onClick={() => onCheckboxChange("female")}
       >
-        {selectedGender === 'male' && (
-          <div className='absolute inset-0 bg-gray-900 bg-opacity-25 rounded-full' />
+        {selectedGender === "female" && (
+          <div className="absolute inset-0 bg-gray-900 bg-opacity-25 rounded-full" />
         )}
       </div>
-      <div
-        className={`relative form-control rounded-lg cursor-pointer w-24 h-24 bg-cover bg-center transition-all duration-200 ease-in-out ${
-          selectedGender === 'female' ? 'bg-gray-300 bg-opacity-50' : ''
-        }`}
-        style={{ backgroundImage: `url(${femaleImageUrl})`, borderRadius: '50%' }}
-        onClick={() => onCheckboxChange('female')}
-      >
-        {selectedGender === 'female' && (
-          <div className='absolute inset-0 bg-gray-900 bg-opacity-25 rounded-full' />
-        )}
+      <span className="font-bold">Female</span>
       </div>
     </div>
   );

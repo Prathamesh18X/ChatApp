@@ -16,18 +16,17 @@ const useSignup = () => {
       return false;
     }
 
-    try {
-      const formData = new FormData();
-      formData.append("input", JSON.stringify({input, step}));
-      formData.append("step", step);
-      if (profilePic) {
-        formData.append("profilePic", profilePic);
-      }    
-      const response = await fetch("/api/auth/signup", {
-        method: "POST",
-        body: formData,
-      });
+    const formData = new FormData();
+    formData.append("input", JSON.stringify({ input, step }));
+    formData.append("step", step);
+    if (profilePic) {
+      formData.append("profilePic", profilePic);
+    }
 
+    const requestPromise = fetch("/api/auth/signup", {
+      method: "POST",
+      body: formData,
+    }).then(async (response) => {
       // Parse the JSON response
       const data = await response.json();
 
@@ -35,29 +34,48 @@ const useSignup = () => {
       if (response.ok) {
         // If the final step (step 4) is successful, set the auth user and store data
         if (step === 4) {
-          toast.success(`Signup successful, welcome ${data.userName}!`);
           localStorage.setItem("authChatUser", JSON.stringify(data));
           setAuthUser(data);
         }
-        return true; // Return true for successful validation or submission
+        return data;
       } else {
         // Handle server errors
         throw new Error(data.error);
       }
-    } catch (error) {
-      // Display the error message to the user using toast
-      toast.error(error.message);
-      return false; // Return false to indicate an error
-    } finally {
-      // Set loading state to false once the request is complete
-      setLoading(false);
+    });
+
+    if (step === 4) {
+      try {
+        await toast.promise(
+          requestPromise,
+          {
+            loading: 'Signing up...',
+            success: `Signup successful, welcome ${input.userName}!`,
+            error: 'Signup failed. Please try again.',
+          }
+        );
+        return true; // Return true for successful validation or submission
+      } catch (error) {
+        return false; // Return false to indicate an error
+      } finally {
+        setLoading(false); // Set loading state to false once the request is complete
+      }
+    } else {
+      try {
+        await requestPromise;
+        return true; // Return true for successful validation or submission
+      } catch (error) {
+        toast.error('An error occurred. Please try again.');
+        return false; // Return false to indicate an error
+      } finally {
+        setLoading(false); // Set loading state to false once the request is complete
+      }
     }
   };
 
   // Function to validate input at each step
   const handleInputError = (input, step) => {
-    const { email, fullName, userName, password, confirmPassword, gender } =
-      input;
+    const { email, fullName, userName, password, confirmPassword, gender } = input;
     if (step === 1) {
       // Step 1: Validate email
       if (!email) {
@@ -70,7 +88,6 @@ const useSignup = () => {
         toast.error("Please enter a valid username.");
         return false;
       }
-      
     } else if (step === 3) {
       // Step 3: Validate password and confirm password
       if (!password) {
@@ -90,7 +107,7 @@ const useSignup = () => {
         return false;
       }
     } else if (step === 4) {
-      // Step 4: Validate gender
+      // Step 4: Validate gender and full name
       if (!gender) {
         toast.error("Please select your gender.");
         return false;

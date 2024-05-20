@@ -73,37 +73,3 @@ export const getBlockedStatus = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
-
-/*
-	export const getUsersWithLastMessage = async (req, res) => {
-	try {
-	  const loggedInUserId = req.user._id;
-  
-	  // Find all users except the logged-in user
-	  const filteredUsers = await User.find({ _id: { $ne: loggedInUserId } }).select("-password");
-	  // Object to store receiver users with their last message
-	  const usersWithLastMessage = {};
-  
-	  // Iterate over each user
-	  for (const user of filteredUsers) {
-		const receiverId = user._id;
-  
-		// Find the conversation between the logged-in user and the receiver user
-		const conversation = await Conversation.findOne({
-		  participant: { $all: [loggedInUserId, receiverId] },
-		}).populate("message").sort({ createdAt: -1 }).limit(1);
-  
-		// Get the last message in the conversation
-		const lastMessage = conversation ? conversation.message[0] : null;
-  
-		// Add the receiver user with their last message to the object
-		usersWithLastMessage[receiverId] = lastMessage;
-	  }
-	  // Respond with the object containing receiver users and their last messages
-	  res.status(200).json(usersWithLastMessage);
-	} catch (error) {
-	  console.error("Error in getUsersWithLastMessage: ", error.message);
-	  res.status(500).json({ error: "Internal Server Error" });
-	}
-  };
-*/

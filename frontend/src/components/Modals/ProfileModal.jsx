@@ -27,7 +27,7 @@ const ProfileModal = () => {
         src={authUser.profilePic}
         alt=""
         onClick={() => document.getElementById("profileModal").showModal()}
-        className="w-8 h-8 rounded-full cursor-pointer object-cover"
+        className="w-10 h-10 rounded-full cursor-pointer object-cover"
       />
       <dialog id="profileModal" className="modal">
         <div className=" modal-box flex p-0 bg-white text-black absolute translate-y-16 left-2 bottom-10 duration-300">

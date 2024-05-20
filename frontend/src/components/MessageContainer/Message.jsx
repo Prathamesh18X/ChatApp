@@ -37,7 +37,6 @@ const Message = ({ message, color }) => {
 
   return (
     <div className={chatClassName}>
-      {/* <div className="chat-image avatar"></div> */}
       <div
         className={`chat-bubble px-5 py-2 justify-center items-start rounded-lg flex flex-col ${chatBubbleClassName}`}
       >

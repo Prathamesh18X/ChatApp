@@ -1,13 +1,15 @@
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { useAuth } from "../Context/AuthContext.jsx";
+import { useConversation } from "../zustand/useConversation.js";
 const useLogin =()=>{
     const {setAuthUser} = useAuth();
+    const {setProfilePic} = useConversation();
     //step 3 : crete useState for Loading state
     const [loading , setLoading] = useState(false);
-    //step 1: Create a login function , which takes input from signup form.
-    const login = async({userName ,password}) => {
-        const success = handleInputErrors({userName,password});
+    //step 1: Create a login function , which takes input from login form.
+    const login = async({email ,password}) => {
+        const success = handleInputErrors({email,password});
         if(!success) return
     
     //step 4 : in Loading state , fetch API from backend
@@ -19,7 +21,7 @@ const useLogin =()=>{
                 headers : {
                     "Content-Type" : "application/json"
                 },
-                body : JSON.stringify({userName ,password})
+                body : JSON.stringify({email ,password})
             })
 
             //step 4.2 : handle response
@@ -35,6 +37,12 @@ const useLogin =()=>{
                 //step 4.4 : set authUser to authContext 
                 setAuthUser(data);
 
+            }else if(data.warning){
+                toast('Email not found!', {
+                    icon: '⚠️',
+                  });
+            }else if( data.loading){
+                setProfilePic(data.profilePic);
             }else{
                 throw new Error(data.error)
             }
@@ -50,8 +58,8 @@ const useLogin =()=>{
 export default useLogin
 
 //step 2 : Create a function to handle/Validate input errors
-const handleInputErrors = ({userName ,password}) => {
-    if (!userName || !password) {   
+const handleInputErrors = ({email ,password}) => {
+    if (!email) {   
 		toast.error("Please fill in all fields");
 		return false;
 	}
