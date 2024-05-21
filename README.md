@@ -1,48 +1,66 @@
 # CHATAPP
-<img src="https://github.com/mank-423/orderLLM/assets/96490105/31ec5d3a-c4af-42a6-a4c0-7e642af4c279" alt="logoCircle" style="width: 200px; height: 200px;">
+<img src="https://github.com/Prathamesh18X/ChatApp/assets/109477390/f9cd801c-e844-413b-8543-dc1ccb99d548" alt="logoCircle" style="width: 160px; height: 160px;">
 
-## Idea 💡
-The idea came while I was doing GenerativeAI course from DeepLearningAI by AndrewYNg.
-He stated that every job, is a mix of certain tasks that we need to perform, and generative AI could be a game-changer as it can automate the tasks, to increase efficiency of the job. Taking up the full job roles is still long-way to go but automation of tasks is possible.
-He also mentioned a certain project idea which actually got me thinking about how to take up on this challenge, and thus, I have developed Order LLM v1.
+## Introduction 🎯
+I challenged to learn RealTime operation technology and subsequently developed ChatApp v1. ChatApp is designed to facilitate seamless networking with friends, and its integrated Assistant feature is aimed at efficiently addressing users' queries.Its Assistant Support 1.5v Flast modal using API and provide dynamic Solutions to any problem within 2seconds any total 75+ languages.
 
-## The basic working idea
-![image](https://github.com/mank-423/orderLLM/assets/96490105/1a4d77c6-0d76-4499-adc1-901987212e45)
+For more Details refer below links:
+- Frontend docs: https://github.com/Prathamesh18X/ChatApp/tree/master/backend#readme
+- Backend docs: https://github.com/Prathamesh18X/ChatApp/tree/master/frontend#readme
 
-## Core Concept 🤔
-
-The fundamental idea behind Order LLM revolves around simplifying the order-taking process through an intelligent chatbot. Here's how it works:
-
-- **Automated Order Taking:**
-  Order LLM provides a chatbot that automates the entire order-taking job. Consumers can comfortably sit back and place their orders through a natural and interactive conversation with the bot.
-
-- **Menu and Daily Offers:**
-  The chatbot is fed with an extensive menu and daily offers, ensuring users have access to the latest and most enticing options. Whether it's a favorite dish or a special deal, the bot guides users through the available choices.
-
-- **Automated Payment Options:**
-  Upon reaching the end of the order process, Order LLM seamlessly transitions into the payment phase. The chatbot automatically provides payment options to users, streamlining the entire transaction without the need for manual intervention.
-
-This core concept aims to enhance the user experience by offering a convenient and automated ordering system, making the entire process efficient and enjoyable.
+## Working state↘️
+![image](https://github.com/Prathamesh18X/ChatApp/assets/109477390/18aec5ef-653d-44b5-9286-7766044227ec)
 
 
 ## The tech-stack ⚙️
-- React Typescript + TailwindCSS and Firebase for front-end
-- Nodejs, expressjs, mongoose, mongodb, Langchain, and OpenAI on backend.
+### Front-end
+- React
+- Javscript
+- TailwindCSS (Framework)
+- DaisyUI (UI/UX)
+- Zustand (State Management)
 
-## Use-case 🎢
+### Backend
+- Nodejs
+- Expressjs
+- Socket.io
+- Google Gemini (model : Flash v1.5)
+- multer
+- JWT & bcrypt (Security)
 
-- 🤵 **Versatile solution for all sectors who embrace ordering**:
-  Order LLM provides a versatile solution that caters to the needs of various sectors looking to simplify their ordering processes. Whether you're in the restaurant business, retail, or any other industry, our system adapts to your specific ordering requirements.
+### Database
+- Cloudinary (Storing media files)
+- Mongoose
+- Mongodb
 
-- 📱 **Ideal for SMEs/MSMEs embracing tech without hefty e-commerce costs**:
-  Small and medium-sized enterprises (SMEs) and micro, small, and medium enterprises (MSMEs) can benefit from Order LLM without breaking the bank. Embrace technology without the hefty costs associated with traditional e-commerce solutions.
+## fundamental Concept 🤔
+The main concepts behind ChatApp revolves around enhancing social networking and providing efficient assistance through an intelligent chatbot. Here's how it works:
 
-- 📝 **Perfect for crowded spots - no queues, seamless orders, and chit-chat with order-takers**:
-  In bustling and crowded places, Order LLM shines by eliminating queues. Experience seamless orders without the usual waiting time, all while engaging in friendly chit-chat with our interactive chatbot.
+- **Seamless Social Networking:**
+ChatApp offers a platform that automates and simplifies the process of building and maintaining a network with friends. Users can easily connect and interact through a natural and engaging conversation with the bot.
 
-- 💪 **Fitness freaks with queries not known to employees**:
-  Fitness enthusiasts often have specific dietary requirements or unique queries that might not be commonly known to restaurant employees. Order LLM is designed to understand and address these fitness-related concerns, ensuring a personalized and informed ordering experience.
+- **Integrated Assistance:**
+The chatbot is designed to answer a wide range of user queries, providing immediate and helpful responses. Whether users need information, recommendations, or troubleshooting help, the Assistant feature ensures they receive accurate and prompt support.
 
-For understanding the working:
-- Front-end docs: https://github.com/mank-423/orderLLM/tree/main/frontend#readme
-- Back-end docs: https://github.com/mank-423/orderLLM/tree/main/backend#readme
+- **Secure and Private Interactions:**
+Ensuring user privacy and security is a top priority. ChatApp implements robust security measures to protect user data and conversations, providing a safe and trustworthy environment for social networking.
+
+
+## Usage 🎢
+
+- 🤝 **Versatile solution for all your social networking needs**:
+  ChatApp provides a versatile platform that caters to anyone looking to enhance their social interactions. Whether you're connecting with friends, meeting new people, or simply staying in touch, our system adapts to your social networking requirements.
+
+- 👥 **Create Groups with all your friends**:
+  Easily create groups to stay connected with all your friends. Whether planning events, discussing interests, or just catching up, group chats make communication effortless and fun.
+
+- 🧠 **Get History of questions asked to Assistant**:
+  Keep track of all the queries you've asked the Assistant. This feature helps you revisit previous questions and responses, ensuring you have a handy reference for any information or help you've received.
+
+- 👤 **View Profile of users and message them**:
+  View detailed profiles of other users, including their bios. This feature allows you to get to know people better and start meaningful conversations, making it easier to expand your network and deepen existing relationships.
+
+- 🚫 **Block User if not interested in messaging**:
+  Maintain control over your interactions by blocking users if you're not interested in messaging them. This feature ensures you have a safe and comfortable environment, free from unwanted interactions.
+
+These features are designed to fit seamlessly into your daily life, making social networking efficient, enjoyable, and secure.
