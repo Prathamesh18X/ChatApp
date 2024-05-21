@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { useMenu } from "../../zustand/useMenu.js";
 import { BsChatLeftTextFill } from "react-icons/bs";
 import { HiUserGroup } from "react-icons/hi2";
@@ -32,6 +33,7 @@ const Menu = () => {
           <img src="./public/ChatApp.svg" alt="not found"  />
         </div> */}
         <button className="flex-col justify-center items-center  p-2 flex max-md:hidden">
+          <Link to="/">
           <div className=" font-bold text-[12px] ">
             <img
             src="https://res.cloudinary.com/da1mwmvno/image/upload/v1716113819/Logo/rn4ihnpiptrahzc4pwg9.svg"
@@ -43,6 +45,7 @@ const Menu = () => {
             ChatApp
           </span>
           </div>
+          </Link>
         </button>
         <button
           className={`${

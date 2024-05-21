@@ -49,6 +49,7 @@ const SignUp = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-w-full mx-auto max-md:p-4">
+      <Link to ="/">
       <button className="absolute top-0 left-0 mt-4 ml-4  p-2 max-md:hidden">
           <div className=" font-bold text-[12px] ">
             <img
@@ -62,6 +63,7 @@ const SignUp = () => {
           </div>
         </button>
         
+      </Link>
       <ul className="absolute top-10 steps steps-horizontal   text-black text-[10px]">
         <li className={`step ${step >= 1 ? "step-primary" : ""}`}>Email</li>
         <li className={`step ${step >= 2 ? "step-primary" : ""}`}>Profile</li>
