@@ -33,6 +33,7 @@
     return (
       <div className="flex flex-col items-center justify-center min-w-full mx-auto max-md:p-4 ">
         <button className="absolute top-0 left-0 mt-4 ml-4  p-2 max-md:hidden">
+          <Link to="/">
           <div className=" font-bold text-[12px] ">
             <img
             src="https://res.cloudinary.com/da1mwmvno/image/upload/v1716113819/Logo/rn4ihnpiptrahzc4pwg9.svg"
@@ -43,6 +44,7 @@
             ChatApp
           </span>
           </div>
+          </Link>
         </button>
         <div className="w-full max-w-md p-6 rounded-lg shadow-xl backdrop-filter backdrop-blur-lg bg-opacity-25  border bg-white">
           <div className="flex flex-col">
