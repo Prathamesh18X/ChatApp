@@ -1,5 +1,5 @@
 # CHATAPP
-<img src="https://github.com/Prathamesh18X/ChatApp/assets/109477390/f9cd801c-e844-413b-8543-dc1ccb99d548" alt="logoCircle" style="width: 160px; height: 160px;">
+<img src="https://github.com/Prathamesh18X/ChatApp/assets/109477390/f9a96fba-2f1e-4f81-bd1f-bb365ed36779" alt="logoCircle" style="width: 160px; height: 160px;">
 
 ## Introduction 🎯
 I challenged to learn RealTime operation technology and subsequently developed ChatApp v1. ChatApp is designed to facilitate seamless networking with friends, and its integrated Assistant feature is aimed at efficiently addressing users' queries.Its Assistant Support 1.5v Flast modal using API and provide dynamic Solutions to any problem within 2seconds any total 75+ languages.
