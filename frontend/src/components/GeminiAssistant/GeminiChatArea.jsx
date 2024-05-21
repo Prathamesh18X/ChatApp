@@ -10,7 +10,7 @@ const GeminiChatArea = () => {
   const { onSent, loading ,recentPrompt, previousPrompt, showResult, resultData } = useGemini().geminiValue;
 
   return (
-    <div className="max-md:h-[86vh] flex flex-col w-full">
+    <div className="max-md:h-[screen] flex flex-col w-full">
       {/*body*/}
       {showResult ? (
         <div className="flex flex-col flex-grow overflow-auto m-3">
@@ -27,7 +27,7 @@ const GeminiChatArea = () => {
       )}
 
       {/*inputBox*/}
-      <div>
+      <div className="">
         <MessageInput />
       </div>
     </div>
