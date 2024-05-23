@@ -1,8 +1,9 @@
 # CHATAPP
-<img src="https://github.com/Prathamesh18X/ChatApp/assets/109477390/f9a96fba-2f1e-4f81-bd1f-bb365ed36779" alt="logoCircle" style="width: 160px; height: 160px;">
+<a href="https://chatapp-oxgk.onrender.com/app" target="_blank"><img src="https://github.com/Prathamesh18X/ChatApp/assets/109477390/f9a96fba-2f1e-4f81-bd1f-bb365ed36779" alt="logoCircle" style="width: 160px; height: 160px;"><a/><br>
+###### *[Click logo to open the app]*
 
 ## Introduction 🎯
-I challenged to learn RealTime operation technology and subsequently developed ChatApp v1. ChatApp is designed to facilitate seamless networking with friends, and its integrated Assistant feature is aimed at efficiently addressing users' queries.Its Assistant Support 1.5v Flast modal using API and provide dynamic Solutions to any problem within 2seconds any total 75+ languages.
+I challenged to learn RealTime operation technology and subsequently developed ChatApp v1. ChatApp is designed to facilitate seamless networking with friends, and its integrated Assistant feature is aimed at efficiently addressing users' queries.Its Assistant Support 1.5v Flast modal using API and provide dynamic Solutions to any problem within 2 seconds in more than 75+ languages.
 
 For more Details refer below links:
 - Frontend docs: https://github.com/Prathamesh18X/ChatApp/tree/master/backend#readme
