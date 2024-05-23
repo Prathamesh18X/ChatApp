@@ -1,5 +1,5 @@
 # CHATAPP
-<a href="https://chatapp-oxgk.onrender.com/app" target="_blank"><img src="https://github.com/Prathamesh18X/ChatApp/assets/109477390/f9a96fba-2f1e-4f81-bd1f-bb365ed36779" alt="logoCircle" style="width: 160px; height: 160px;"><a/><br>
+<a href="https://chatapp-oxgk.onrender.com" target="_blank"><img src="https://github.com/Prathamesh18X/ChatApp/assets/109477390/f9a96fba-2f1e-4f81-bd1f-bb365ed36779" alt="logoCircle" style="width: 160px; height: 160px;"><a/><br>
 ###### *[Click logo to open the app]*
 
 ## Introduction 🎯
