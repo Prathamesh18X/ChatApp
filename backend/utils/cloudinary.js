@@ -1,11 +1,13 @@
 import { v2 as cloudinary } from 'cloudinary';
+import dotenv from 'dotenv';
+
 
 // import { promisify } from 'util'; // Make sure to import `promisify`
-
+dotenv.config();
 cloudinary.config({
-  cloud_name: "da1mwmvno",
-  api_key: "425456628335156",
-  api_secret: "PEnQNsd8cfHEc2JsSjP6u29mX40",
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET_KEY,
 });
 
 export const uploadToCloudinary = async (fileURI) => {
