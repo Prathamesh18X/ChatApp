@@ -15,7 +15,7 @@ const {profilePic,setProfilePic } = useConversation();
 
 const handleSubmit = async (e) => {
   e.preventDefault();
-  await login({email , password});
+  await login({email: email.toLowerCase() , password});
 }
 // const [value,setValue] = useState('')
 //   const handleGoogleLogin =()=>{
@@ -74,7 +74,7 @@ const handleSubmit = async (e) => {
                 type="text"
                 placeholder="Enter Email"
                 className="bg-white w-full h-10 px-3 py-2 border rounded-md"
-                onChange={(e) => {setEmail(e.target.value),setProfilePic("")}}
+                onChange={(e) => {setEmail(e.target.value.trim().toLowerCase()),setProfilePic("")}}
                 onBlur={handleSubmit}
                 value={email}
               />

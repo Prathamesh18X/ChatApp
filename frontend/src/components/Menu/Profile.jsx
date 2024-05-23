@@ -3,7 +3,6 @@ import { useAuth } from "../../Context/AuthContext";
 import { FaRegEdit } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import LogoutButton from "../QuickButtons/LogoutButton";
-import ImageModal from "../Modals/ImageModal";
 import toast from "react-hot-toast";
 
 
@@ -14,7 +13,6 @@ const Profile = () => {
   const [userName, setUserName] = useState(authUser.userName);
   const [profilePic, setProfilePic] = useState(null);
   const [profilePicUrl, setProfilePicUrl] = useState(authUser.profilePic);
-  const modal = document.getElementById("image-modal");
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -30,9 +28,7 @@ const Profile = () => {
     setProfilePicUrl(authUser.profilePic);
   }
 
-  const handleOpenProfilePic = () => {
-    modal.showModal();
-  }
+
   //handling server
   const handleProfileUpdate = async () => {
  try {
@@ -91,8 +87,7 @@ const Profile = () => {
         ) : <img
         src={profilePicUrl}
         alt="profile"
-        onClick={handleOpenProfilePic}
-        className="w-32 h-32 rounded-full cursor-pointer object-cover"
+        className="w-32 h-32 rounded-full object-cover"
         style={{ display: edit ? "none" : "block" }}
         onError={(e) => {
           e.target.style.display = "none";
@@ -141,7 +136,6 @@ const Profile = () => {
 
       </div>
         <p className="text-[12px] ">your all chats will be removed from this device</p>
-        <ImageModal image={profilePicUrl} />
     </div>
   );
 };

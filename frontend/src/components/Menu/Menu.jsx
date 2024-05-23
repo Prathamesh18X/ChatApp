@@ -26,7 +26,7 @@ const Menu = () => {
     setSelectedMenu("Community");
   };
   return (
-    <div className={`${openChats ? "max-md:hidden" : ""} max-md:absolute max-md:bottom-0 max-md:py-2 max-md:bg-white flex max-md:w-full flex-row md:flex-grow-0 md:flex-col md:h-full md:justify-between py-5`}>
+    <div className={`${openChats ? "max-md:hidden" : ""} max-md:fixed max-md:bottom-0 max-md:py-2 max-md:bg-white flex max-md:w-full flex-row md:flex-grow-0 md:flex-col md:h-full md:justify-between py-5`}>
       {/* Top Section - Chat Buttons */}
       <div className="flex flex-row justify-around w-full md:flex-col space-y-2">
         {/* <div className="px-4 text-black">

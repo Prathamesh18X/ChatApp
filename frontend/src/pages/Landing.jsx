@@ -7,8 +7,8 @@ import { SiAdblock } from "react-icons/si";
 const Landing = () => {
   return (
     <div className="h-screen w-screen">
-      <header className="flex justify-between w-full h-[15vh] p-4  text-white">
-        <div>
+      <header className="flex fixed justify-between w-full h-[10vh] p-4  text-white backdrop-filter backdrop-blur-sm shadow-md bg-opacity-50">
+        <div className="flex h-15">
           <img
             src="https://res.cloudinary.com/da1mwmvno/image/upload/v1716113819/Logo/rn4ihnpiptrahzc4pwg9.svg"
             alt="not found"
@@ -16,20 +16,25 @@ const Landing = () => {
           />
         </div>
         <div className="flex items-center">
+        <Link to="/signup">
+          <button className="btn  text-white rounded-full bg-[#0086cd] border-none hover:bg-slate-700">
+            Get started
+          </button>
+          </Link>
           <Link to="/login">
-          <button className="btn btn-ghost rounded-full hover:bg-slate-700 dark:bg-indigo-600 text-white btn-primary mx-2">
+          <button className="btn btn-ghost rounded-full hover:bg-slate-700 dark:bg-indigo-600 text-white btn-primary ">
             Login
           </button>
           </Link>
           <Link to="/signup">
-          <button className="btn btn-ghost rounded-full hover:bg-slate-700 dark:bg-indigo-600 text-white btn-primary mx-2">
+          <button className="btn btn-ghost rounded-full hover:bg-slate-700 dark:bg-indigo-600 text-white btn-primary ">
             Signup
           </button>
           </Link>
         </div>
       </header>
 
-      <div className="flex h-[70vh] max-md:h-[80vh] max-md:justify-center max-md:flex-col-reverse  text-white ">
+      <div className="flex h-[90vh] max-md:h-screen max-md:justify-center max-md:flex-col-reverse  text-white ">
         <div className="flex flex-col items-center justify-center w-full">
           <h1 className="text-8xl max-md:text-6xl w-full flex justify-center items-center font-bold m-2">
             <span className="text-[#0086cd]">Chat</span>

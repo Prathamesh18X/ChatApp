@@ -48,7 +48,7 @@ const GroupModal =()=> {
                 setGroupPicUrl(null);
                 setSelectedParticipants([]);
                 setCreateGroupModal(false);
-                modal.closest();
+                modal.close();
             } else {
                 const errorData = await response.json();
                 toast.error(`Error creating group: ${errorData.error}`);

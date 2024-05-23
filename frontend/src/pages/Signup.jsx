@@ -45,46 +45,42 @@ const SignUp = () => {
     const imageUrl = URL.createObjectURL(file);
     setProfilePicUrl(imageUrl);
   };
-  //enter key down
 
   return (
     <div className="flex flex-col items-center justify-center min-w-full mx-auto max-md:p-4">
-      <Link to ="/">
-      <button className="absolute top-0 left-0 mt-4 ml-4  p-2 max-md:hidden">
-          <div className=" font-bold text-[12px] ">
+      <Link to="/">
+        <button className="absolute top-0 left-0 mt-4 ml-4 p-2 max-md:hidden">
+          <div className="font-bold text-[12px]">
             <img
-            src="https://res.cloudinary.com/da1mwmvno/image/upload/v1716113819/Logo/rn4ihnpiptrahzc4pwg9.svg"
-            alt="not found"
-            className="w-14"
-          />
-          <span className=" text-xl text-[#0086cd] dark:text-gray-300 font-bold">
-            ChatApp
-          </span>
+              src="https://res.cloudinary.com/da1mwmvno/image/upload/v1716113819/Logo/rn4ihnpiptrahzc4pwg9.svg"
+              alt="not found"
+              className="w-14"
+            />
+            <span className="text-xl text-[#0086cd] dark:text-gray-300 font-bold">
+              ChatApp
+            </span>
           </div>
         </button>
-        
       </Link>
-      <ul className="absolute top-10 steps steps-horizontal   text-black text-[10px]">
+      <ul className="absolute top-10 steps steps-horizontal text-black text-[10px]">
         <li className={`step ${step >= 1 ? "step-primary" : ""}`}>Email</li>
         <li className={`step ${step >= 2 ? "step-primary" : ""}`}>Profile</li>
         <li className={`step ${step >= 3 ? "step-primary" : ""}`}>Password</li>
         <li className={`step ${step >= 4 ? "step-primary" : ""}`}>Personal</li>
       </ul>
-      <div className="w-full max-w-md p-6 rounded-lg shadow-xl backdrop-filter backdrop-blur-lg bg-opacity-25  border-2 bg-white border-c">
+      <div className="w-full max-w-md p-6 rounded-lg shadow-xl backdrop-filter backdrop-blur-lg bg-opacity-25 border-2 bg-white border-c">
         <div className="flex flex-col text-center text-black">
           <h1 className="flex flex-col text-3xl font-bold text-center text-black">
             <span>Sign Up</span>
           </h1>
           <span className="pb-3">
             Already have an account?{" "}
-            <Link
-              className="hover:underline text-blue-600 inline-block"
-              to="/Login"
-            >
+            <Link className="hover:underline text-blue-600 inline-block" to="/Login">
               Login
             </Link>
           </span>
-        </div><hr className="mb-5 dark:border-white"></hr>
+        </div>
+        <hr className="mb-5 dark:border-white"></hr>
 
         <form onSubmit={handleSubmit}>
           {/* Step 1: Email */}
@@ -100,7 +96,7 @@ const SignUp = () => {
                   className="bg-white w-full input input-bordered h-10"
                   value={input.email}
                   onChange={(e) =>
-                    setInput({ ...input, email: e.target.value })
+                    setInput({ ...input, email: e.target.value.trim().toLowerCase() })
                   }
                 />
                 <span className="text-gray-900">
@@ -137,11 +133,11 @@ const SignUp = () => {
                 />
               </div>
 
-              <div className="py-6  flex justify-center items-center">
+              <div className="py-6 flex justify-center items-center">
                 <input
                   type="text"
                   placeholder="Username"
-                  className="bg-white text-center w-50  input input-bordered h-10"
+                  className="bg-white text-center w-50 input input-bordered h-10"
                   value={input.userName}
                   onChange={(e) =>
                     setInput({ ...input, userName: e.target.value })
@@ -184,7 +180,7 @@ const SignUp = () => {
           {/* Step 4: Gender */}
           {step === 4 && (
             <>
-            <div className="text-gray-900 mb-4 text-center">Select your gender</div>
+              <div className="text-gray-900 mb-4 text-center">Select your gender</div>
               <GenderCheckbox
                 onCheckboxChange={handleCheckboxChange}
                 selectedGender={input.gender}
@@ -213,7 +209,7 @@ const SignUp = () => {
             {step > 1 && (
               <button
                 type="button"
-                className="btn  bg-slate-700"
+                className="btn bg-slate-700"
                 onClick={handlePreviousStep}
                 disabled={loading}
               >
@@ -225,7 +221,7 @@ const SignUp = () => {
             {step < 4 ? (
               <button
                 type="button"
-                className="btn  bg-slate-700"
+                className="btn bg-slate-700"
                 onClick={handleNextStep}
                 disabled={loading}
               >

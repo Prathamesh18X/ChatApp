@@ -7,10 +7,10 @@ import { PromptAndResponse } from "./PromptAndResponse.jsx";
 const GeminiChatArea = () => {
   const { authUser } = useAuth();
   const [conversations, setConversations] = useState([]);
-  const { onSent, loading ,recentPrompt, previousPrompt, showResult, resultData } = useGemini().geminiValue;
+  const {  showResult } = useGemini().geminiValue;
 
   return (
-    <div className="max-md:h-[screen] flex flex-col w-full">
+    <div className="max-md:h-[82vh] flex flex-col w-full">
       {/*body*/}
       {showResult ? (
         <div className="flex flex-col flex-grow overflow-auto m-3">
@@ -27,7 +27,7 @@ const GeminiChatArea = () => {
       )}
 
       {/*inputBox*/}
-      <div className="">
+      <div className="max-md:bottom-24 max-md:fixed max-md:  w-full">
         <MessageInput />
       </div>
     </div>
