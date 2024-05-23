@@ -1,7 +1,15 @@
+<<<<<<< HEAD
 # <img src="https://github.com/Prathamesh18X/ChatApp/assets/109477390/f9a96fba-2f1e-4f81-bd1f-bb365ed36779" alt="logoCircle" style="width: 125px; height: 125px;"><div style="text-color:blue">CHATAPP
 
 ## Introduction 🎯
 I challenged myself to learn RealTime operating technology and subsequently developed ChatApp v1. It is designed to facilitate seamless networking with friends, and its integrated Assistant feature is aimed at efficiently addressing users' queries.Its Assistant Support 1.5v Flast modal using API and provide dynamic Solutions to any problem within 2 seconds in more than 75+ languages.
+=======
+# CHATAPP
+<img src="https://github.com/Prathamesh18X/ChatApp/assets/109477390/f9a96fba-2f1e-4f81-bd1f-bb365ed36779" alt="logoCircle" style="width: 160px; height: 160px;">
+
+## Introduction 🎯
+I challenged to learn RealTime operation technology and subsequently developed ChatApp v1. ChatApp is designed to facilitate seamless networking with friends, and its integrated Assistant feature is aimed at efficiently addressing users' queries.Its Assistant Support 1.5v Flast modal using API and provide dynamic Solutions to any problem within 2seconds any total 75+ languages.
+>>>>>>> 2cd284a543ca7703d48bd7f4b0d004141865ddac
 
 For more Details refer below links:
 - Frontend docs: https://github.com/Prathamesh18X/ChatApp/tree/master/backend#readme
@@ -11,10 +19,17 @@ For more Details refer below links:
 ![image](https://github.com/Prathamesh18X/ChatApp/assets/109477390/18aec5ef-653d-44b5-9286-7766044227ec)
 
 
+<<<<<<< HEAD
 ## The Tech stack ⚙️
 ### Front-end
 - React
 - Javascript
+=======
+## The tech-stack ⚙️
+### Front-end
+- React
+- Javscript
+>>>>>>> 2cd284a543ca7703d48bd7f4b0d004141865ddac
 - TailwindCSS (Framework)
 - DaisyUI (UI/UX)
 - Zustand (State Management)
