@@ -33,7 +33,7 @@ const Message = ({ message, color }) => {
       : "chat p-[1px] chat-start";
 
   const chatBubbleClassName =
-    message.senderId === authUser._id ? "bg-black-100" : "bg-black-500";
+    message.senderId == authUser._id ? "bg-blue-300 dark:bg-slate-800" : "bg-slate-400 dark:bg-gray-700";
 
   return (
     <div className={chatClassName}>
@@ -45,10 +45,10 @@ const Message = ({ message, color }) => {
             {senderName}
           </div>
         )}
-        <div className="max-sm:text-sm text-white text-sm pr-8 ">
+        <div className="max-sm:text-sm font-semibold text-gray-800   dark:text-white text-sm pr-8 ">
           {message.message}
         </div>
-        <div className=" text-[9px] absolute bottom-[1px] right-2  gap-1 align-text-bottom">
+        <div className=" text-[9px] absolute text-black dark:text-white bottom-[1px] right-2  gap-1 align-text-bottom">
           {messageTime}
         </div>
       </div>

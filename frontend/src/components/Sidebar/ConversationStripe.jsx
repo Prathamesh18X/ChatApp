@@ -11,13 +11,12 @@ const ConversationStripe = ({ conversation, lastIdx }) => {
   const modal = document.getElementById("image-modal");
   const profilePic = selectedConversation?.profilePic;
   const {openChats, setOpenChats} = useMenu();
-  // console.log(profilePic);
 
   return (
     <>
       <div
-        className={`flex gap-2 items-center hover:bg-sky-200 dark:hover:bg-sky-700 rounded p-2 py-1 cursor-pointer 
-		${isSelected ? "bg-sky-300 dark:bg-sky-900" : ""}`}
+        className={`flex gap-2 items-center hover:bg-gray-200 dark:hover:bg-slate-600 rounded p-2 py-1 cursor-pointer 
+		${isSelected ? "bg-blue-300 dark:bg-slate-900" : ""}`}
         onClick={() => {setSelectedConversation(conversation); setOpenChats(true)}}
       >
         <div className={`avatar ${isOnline}`}>
@@ -28,7 +27,7 @@ const ConversationStripe = ({ conversation, lastIdx }) => {
         <div className="flex flex-col flex-1">
           <div className="flex  flex-col gap- justify-between">
             <p className="font-bold text-md text-gray-700 dark:text-gray-300">{conversation.fullName}</p>
-            <p className='text-[12px] text-gray-500'>{isOnline ? "online" : null}</p>
+            <p className={`text-[12px]  text-gray-500`}>{isOnline ? "online" : null}</p>
             {/* or
 						MessageCount */}
           </div>

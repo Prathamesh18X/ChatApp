@@ -3,7 +3,6 @@ import useGetMessages from "../../hooks/useGetMessages.js";
 import useGetGroupMessages from "../../hooks/useGetGroupMessages.js";
 import { useMenu } from "../../zustand/useMenu.js";
 import Message from "./Message.jsx";
-import useListenMessages from "../../hooks/useListenMessage.jsx";
 
 // Helper function to format the date
 const formatDate = (dateString) => {
@@ -15,7 +14,6 @@ const ChatSection = () => {
   const { messages, loading } = useGetMessages();
   const { groupMessages, loading: groupLoading } = useGetGroupMessages();
   const { selectedMenu } = useMenu();
-  useListenMessages();
   const lastMessageRef = useRef();
 
   useEffect(() => {
@@ -33,14 +31,13 @@ const ChatSection = () => {
   }
 
   const colors = [
-    "bg-gradient-to-r from-rose-400 to-rose-700 bg-clip-text inline-block text-transparent", // Rose gradient
-    "bg-gradient-to-r from-orange-400 to-orange-700 bg-clip-text inline-block text-transparent", // Orange gradient
-    "bg-gradient-to-r from-amber-400 to-amber-700 bg-clip-text inline-block text-transparent", // Amber gradient
-    "bg-gradient-to-r from-lime-400 to-lime-700 bg-clip-text inline-block text-transparent", // Lime gradient
-    "bg-gradient-to-r from-blue-400 to-blue-700 bg-clip-text inline-block text-transparent", // Blue gradient
-    "bg-gradient-to-r from-indigo-400 to-indigo-700 bg-clip-text inline-block text-transparent", // Indigo gradient
-    "bg-gradient-to-r from-pink-400 to-pink-700 bg-clip-text inline-block text-transparent", // Pink gradient
-  ];
+    "text-rose-600", // Rose color
+    "text-orange-600", // Orange color
+    "text-amber-600", // Amber color
+    "text-blue-600", // Blue color
+    "text-indigo-600", // Indigo color
+    "text-pink-600", // Pink color
+];
 
   const senderColorMapping = useMemo(() => {
     const mapping = {};
@@ -65,7 +62,7 @@ const ChatSection = () => {
       return (
         <div key={message._id}>
           {showDate && (
-            <div className="text-center my-2 text-gray-500">
+            <div className="text-center my-2 text-gray-600">
               {formatDate(message.createdAt)}
             </div>
           )}

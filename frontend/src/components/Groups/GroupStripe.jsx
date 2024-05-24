@@ -10,8 +10,8 @@ const GroupsStripe = ({ group }) => {
   return (  
     <>
       <div
-        className={`flex gap-2 items-center hover:bg-sky-400 rounded p-2 py-1 cursor-pointer 
-		${isSelected ? "bg-sky-500" : ""}`}
+        className={`flex gap-2 items-center  hover:bg-gray-200 hover:dark:bg-slate-600 rounded p-2 py-1 cursor-pointer 
+		${isSelected ? "bg-blue-300 dark:bg-slate-900" : ""}`}
         onClick={() => {setSelectedGroup(group); setOpenChats(true)}}
       >
         <div className={`avatar`}>
@@ -21,7 +21,7 @@ const GroupsStripe = ({ group }) => {
         </div>
         <div className="flex flex-col flex-1">
           <div className="flex  flex-col gap- justify-between">
-            <p className="font-bold text-gray-900">{group.name}</p>
+            <p className="font-bold dark:text-gray-100 text-gray-900">{group.name}</p>
 
           </div>
         </div>

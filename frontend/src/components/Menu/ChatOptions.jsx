@@ -32,19 +32,23 @@ const ChatOptions = () => {
   }, [selectedConversation._id]);
 
   const handleClearChats = async () => {
-    try {
-      const res = await fetch(`/api/messages/clear/${selectedConversation._id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await res.json();
-      toast.success(data.message);
-    } catch (error) {
-      console.error("Error clearing chats:", error);
-    }
+    const confirmed = confirm("Are you sure you want to delete all messages for this chat?")
+    if(confirmed){
+      try {
+        const res = await fetch(`/api/messages/clear/${selectedConversation._id}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data = await res.json();
+        toast.success(data.message);
+      } catch (error) {
+        console.error("Error clearing chats:", error);
+      }
   };
+
+}
 
   const handleBlockChat = async () => {
     try {

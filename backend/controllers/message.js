@@ -45,10 +45,12 @@ import { getSocketId, getGroupReceiverSocketIds  , io } from "../socket/socket.j
       if (newMessage) {
         conversation.message.push(newMessage._id);
       }
+
+      const sender = await User.findOne({ _id: senderId }).select(
+        "profilePic fullName" )
       //save message and conversation in database.one by one
       // await conversation.save()
       // await newMessage.save()
-
       //save parallel
       await Promise.all([conversation.save(), newMessage.save()]);
 
@@ -57,9 +59,9 @@ import { getSocketId, getGroupReceiverSocketIds  , io } from "../socket/socket.j
       if (receiverSocketId) {
         //send message to receiver
         // io.to(<socket_id>).emit() used to send events to specific client
-        io.to(receiverSocketId).emit("newMessage", newMessage);
+        io.to(receiverSocketId).emit("newMessage", {newMessage , sender});
       }
-      res.status(201).json(newMessage);
+      res.status(201).json(newMessage );
     } catch (error) {
       console.log("error in sendMessage Controller : ", error.message);
       res.status(500).json({ error: "Internal Server error" });
