@@ -6,8 +6,8 @@
 I challenged to learn RealTime operation technology and subsequently developed ChatApp v1. ChatApp is designed to facilitate seamless networking with friends, and its integrated Assistant feature is aimed at efficiently addressing users' queries.Its Assistant Support 1.5v Flast modal using API and provide dynamic Solutions to any problem within 2 seconds in more than 75+ languages.
 
 For more Details refer below links:
-- Frontend docs: https://github.com/Prathamesh18X/ChatApp/tree/master/backend#readme
-- Backend docs: https://github.com/Prathamesh18X/ChatApp/tree/master/frontend#readme
+- Backend docs: https://github.com/Prathamesh18X/ChatApp/tree/master/backend#readme
+- Frontend docs: https://github.com/Prathamesh18X/ChatApp/tree/master/frontend#readme
 
 ## Working state↘️
 ![image](https://github.com/Prathamesh18X/ChatApp/assets/109477390/18aec5ef-653d-44b5-9286-7766044227ec)
